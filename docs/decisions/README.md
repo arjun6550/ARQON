@@ -1,0 +1,23 @@
+# Architecture Decision Records (ADRs)
+
+All architectural decision records for ARQON are maintained here and indexed below:
+
+- [ADR-0001: Monorepo Strategy](file:///C:/Users/Admin/Downloads/ARQON/docs/adr/ADR-0001-monorepo.md)
+- [ADR-0002: Service Boundaries & Deploy by Phase](file:///C:/Users/Admin/Downloads/ARQON/docs/adr/ADR-0002-service-boundaries-deploy-by-phase.md)
+- [ADR-0003: Shared DB Cluster with Schema Per Service](file:///C:/Users/Admin/Downloads/ARQON/docs/adr/ADR-0003-shared-db-schema-per-service.md)
+- [ADR-0004: Tenant Isolation via Row-Level Security](file:///C:/Users/Admin/Downloads/ARQON/docs/adr/ADR-0004-tenant-isolation-rls.md)
+- [ADR-0005: Transactional Outbox Pattern](file:///C:/Users/Admin/Downloads/ARQON/docs/adr/ADR-0005-transactional-outbox.md)
+- [ADR-0006: PostgreSQL as Source of Truth](file:///C:/Users/Admin/Downloads/ARQON/docs/adr/ADR-0006-postgres-source-of-truth.md)
+- [ADR-0007: Server-Authoritative Timer](file:///C:/Users/Admin/Downloads/ARQON/docs/adr/ADR-0007-server-authoritative-timer.md)
+- [ADR-0008: Autosave & Concurrency Control](file:///C:/Users/Admin/Downloads/ARQON/docs/adr/ADR-0008-autosave-occ.md)
+- [ADR-0009: Isolated Sandbox Execution Strategy](file:///C:/Users/Admin/Downloads/ARQON/docs/adr/ADR-0009-sandbox-strategy.md)
+- [ADR-0010: Media Plane Separation](file:///C:/Users/Admin/Downloads/ARQON/docs/adr/ADR-0010-media-plane.md)
+- [ADR-0011: AI Monitoring with Human-in-the-Loop](file:///C:/Users/Admin/Downloads/ARQON/docs/adr/ADR-0011-ai-human-in-loop.md)
+- [ADR-0012: Authentication Token Architecture](file:///C:/Users/Admin/Downloads/ARQON/docs/adr/ADR-0012-auth-token-model.md)
+- [ADR-0018: RLS Runtime Role and System Mode](file:///C:/Users/Admin/Downloads/ARQON/docs/adr/ADR-0018-rls-runtime-role-and-system-mode.md)
+- [ADR-0019: Auth Tokens & Refresh Cookies](file:///C:/Users/Admin/Downloads/ARQON/docs/adr/ADR-0019-auth-tokens-and-refresh-cookie.md)
+- [ADR-0020: Modular Monolith First](file:///C:/Users/Admin/Downloads/ARQON/docs/adr/ADR-0020-modular-monolith-first.md)
+- [ADR-0021: Immutable Question Versions](file:///C:/Users/Admin/Downloads/ARQON/docs/adr/ADR-0021-immutable-question-versions.md)
+- [ADR-0022: Assessments Pin Versions & Freeze on Publish](file:///C:/Users/Admin/Downloads/ARQON/docs/adr/ADR-0022-assessments-pin-versions-and-freeze.md)
+- [ADR-0023: Candidate Invitations via Token Hashes](file:///C:/Users/Admin/Downloads/ARQON/docs/adr/ADR-0023-candidate-invitations.md)
+- [ADR-0024: Exam Sessions & Server Deadlines](file:///C:/Users/Admin/Downloads/ARQON/docs/adr/ADR-0024-exam-sessions.md)

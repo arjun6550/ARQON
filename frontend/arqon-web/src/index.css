@@ -1,0 +1,156 @@
+@import "tailwindcss";
+
+/*
+ * ARQON design tokens. Idea: an exam answer sheet. Filled bubbles mark progress, a strip of timing marks shows time left.
+ * Quiet everywhere else: cool paper, graphite ink, one deep green for actions, one highlighter yellow for "you are here".
+ */
+@theme {
+  --font-sans: "Schibsted Grotesk", ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --color-paper: #f3f4f6;
+  --color-panel: #ffffff;
+  --color-ink: #171a22;
+  --color-rail: #1e2230;
+  --color-line: #d9dce3;
+  --color-muted: #5b6273;
+  --color-action: #0b6b55;
+  --color-action-dark: #08543f;
+  --color-mark: #f4d13d;
+  --color-danger: #b42318;
+  --color-warn-bg: #fff3cc;
+  --color-ok-bg: #e2f3eb;
+  --color-bad-bg: #fde8e6;
+  --color-sunk: #eceef2;
+  --color-line-soft: #edeff3;
+  --color-on-ink: #ffffff;
+  --color-badge-text: #3a4052;
+  --color-ok-text: #0a5a47;
+  --color-warn-text: #6b4e00;
+  --color-danger-line: #e7b4af;
+  --color-warn-line: #ecd27a;
+}
+
+/* Dark theme: same answer-sheet idea, printed on slate. Set by data-theme on <html> (see lib/theme.ts). */
+:root[data-theme="dark"] {
+  --color-paper: #0e1118;
+  --color-panel: #161a24;
+  --color-ink: #e7e9ef;
+  --color-rail: #0a0d13;
+  --color-line: #2a3042;
+  --color-muted: #99a1b5;
+  --color-action: #2fae8f;
+  --color-action-dark: #279a7e;
+  --color-mark: #f4d13d;
+  --color-danger: #ff8a7d;
+  --color-warn-bg: #3a3014;
+  --color-ok-bg: #12332a;
+  --color-bad-bg: #3b1b18;
+  --color-sunk: #1f2432;
+  --color-line-soft: #212637;
+  --color-on-ink: #0e1118;
+  --color-badge-text: #c9cedd;
+  --color-ok-text: #7fe0c3;
+  --color-warn-text: #f4d98a;
+  --color-danger-line: #6b2e28;
+  --color-warn-line: #6b5a1f;
+}
+
+@layer base {
+  *, ::before, ::after { border-color: var(--color-line); }
+  html { color-scheme: light; }
+  :root[data-theme="dark"] { color-scheme: dark; }
+  body { background: var(--color-paper); color: var(--color-ink); font-family: var(--font-sans); font-size: 15px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3 { letter-spacing: -0.01em; }
+  a { text-underline-offset: 3px; }
+  :focus-visible { outline: 3px solid var(--color-mark); outline-offset: 2px; border-radius: 4px; }
+  input:not([type="checkbox"]):not([type="radio"]), select, textarea {
+    background: var(--color-panel); border-color: var(--color-line); border-radius: 8px; color: var(--color-ink);
+  }
+  input:not([type="checkbox"]):not([type="radio"]):focus, select:focus, textarea:focus {
+    outline: none; border-color: var(--color-action); box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-action) 25%, transparent);
+  }
+  input[type="checkbox"], input[type="radio"] { accent-color: var(--color-action); width: 1rem; height: 1rem; }
+  ::placeholder { color: var(--color-muted); opacity: .7; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+}
+
+@layer components {
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: .4rem; border-radius: 8px; padding: .55rem 1rem; font-weight: 600; font-size: .9rem; line-height: 1.2; border: 1px solid transparent; cursor: pointer; transition: background-color .12s, border-color .12s; text-decoration: none; }
+  .btn:disabled { opacity: .45; cursor: not-allowed; }
+  .btn-primary { background: var(--color-action); color: #fff; }
+  .btn-primary:hover:not(:disabled) { background: var(--color-action-dark); }
+  .btn-quiet { background: var(--color-panel); border-color: var(--color-line); color: var(--color-ink); }
+  .btn-quiet:hover:not(:disabled) { border-color: var(--color-ink); }
+  .btn-danger { background: var(--color-panel); border-color: var(--color-danger-line); color: var(--color-danger); }
+  .btn-danger:hover:not(:disabled) { background: var(--color-bad-bg); }
+  .btn-sm { padding: .3rem .7rem; font-size: .8rem; }
+  .link-action { color: var(--color-action); font-weight: 600; text-decoration: underline; cursor: pointer; background: none; border: 0; padding: 0; font-size: inherit; }
+  .link-action:disabled { opacity: .45; cursor: not-allowed; }
+  .link-danger { color: var(--color-danger); font-weight: 600; text-decoration: underline; cursor: pointer; background: none; border: 0; padding: 0; font-size: inherit; }
+  .panel { background: var(--color-panel); border: 1px solid var(--color-line); border-radius: 14px; }
+  .page-title { font-size: 1.65rem; line-height: 1.2; font-weight: 700; letter-spacing: -0.02em; }
+  .section-title { font-size: 1.05rem; font-weight: 650; }
+  .hint { color: var(--color-muted); font-size: .85rem; }
+  .badge { display: inline-flex; align-items: center; border-radius: 999px; padding: .1rem .6rem; font-size: .75rem; font-weight: 600; background: var(--color-sunk); color: var(--color-badge-text); }
+  .badge-ok { background: var(--color-ok-bg); color: var(--color-ok-text); }
+  .badge-bad { background: var(--color-bad-bg); color: var(--color-danger); }
+  .badge-warn { background: var(--color-warn-bg); color: var(--color-warn-text); }
+  .notice { border-radius: 10px; border: 1px solid var(--color-warn-line); background: var(--color-warn-bg); padding: .75rem 1rem; font-size: .9rem; }
+  .data-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: .9rem; }
+  .data-table th { text-align: left; font-weight: 600; font-size: .8rem; color: var(--color-muted); padding: .65rem .9rem; border-bottom: 1px solid var(--color-line); }
+  .data-table td { padding: .7rem .9rem; border-bottom: 1px solid var(--color-line-soft); }
+  .data-table tr:last-child td { border-bottom: 0; }
+
+  /* Signature device 1: answer bubble. Filled = answered, ringed in yellow = you are here. */
+  .bubble { width: 2.25rem; height: 2.25rem; border-radius: 999px; border: 2px solid var(--color-ink); background: var(--color-panel); color: var(--color-ink); font-weight: 600; font-size: .8rem; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: background-color .12s; }
+  .bubble:hover { background: var(--color-sunk); }
+  .bubble[data-answered="true"] { background: var(--color-ink); color: var(--color-on-ink); }
+  .bubble[data-flagged="true"]::after { content: ""; position: absolute; top: -3px; right: -3px; width: .6rem; height: .6rem; border-radius: 999px; background: var(--color-mark); border: 2px solid var(--color-panel); }
+  .bubble { position: relative; }
+  .bubble[aria-current="true"] { box-shadow: 0 0 0 3px var(--color-mark); }
+
+  /* Signature device 2: timing marks. A strip of bars; each bar is a slice of the time that is left. */
+  .marks { display: flex; gap: 3px; height: 14px; align-items: stretch; }
+  .marks > i { flex: 1; border-radius: 1px; background: var(--color-ink); transition: opacity .4s; }
+  .marks > i[data-off="true"] { opacity: .14; }
+  .marks[data-urgent="true"] > i:not([data-off="true"]) { background: var(--color-danger); }
+  .marks-static { height: 10px; background: repeating-linear-gradient(90deg, currentColor 0 5px, transparent 5px 11px); opacity: .9; }
+
+  .nav-link { display: flex; align-items: center; gap: .65rem; padding: .5rem .75rem; border-radius: 8px; color: #c9cedd; font-weight: 500; text-decoration: none; }
+  .nav-link:hover { background: rgb(255 255 255 / .07); color: #fff; }
+  .nav-link[aria-current="page"] { background: rgb(255 255 255 / .12); color: #fff; box-shadow: inset 3px 0 0 var(--color-mark); }
+
+  .btn-primary, .btn-primary:hover { color: #fff; }
+
+  /* Loading skeletons */
+  .skeleton { border-radius: 8px; background: linear-gradient(90deg, var(--color-sunk) 25%, var(--color-line-soft) 50%, var(--color-sunk) 75%); background-size: 200% 100%; animation: shimmer 1.4s linear infinite; }
+  @keyframes shimmer { to { background-position: -200% 0; } }
+
+  /* Keyboard hint */
+  .kbd { display: inline-block; min-width: 1.4rem; text-align: center; padding: 0 .35rem; border: 1px solid var(--color-line); border-bottom-width: 2px; border-radius: 5px; font-family: var(--font-mono); font-size: .72rem; color: var(--color-muted); background: var(--color-panel); }
+
+  /* Stat block: one number, one label. */
+  .stat { padding: 1rem 1.15rem; }
+  .stat-value { font-size: 1.9rem; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+  .stat-label { color: var(--color-muted); font-size: .82rem; margin-top: .15rem; }
+
+  /* Segmented progress made of the same bars as the timing strip */
+  .meter { display: flex; gap: 2px; height: 10px; }
+  .meter > i { flex: 1; border-radius: 1px; background: var(--color-line); }
+  .meter > i[data-on="true"] { background: var(--color-action); }
+
+  /* Modal + toast */
+  .overlay { position: fixed; inset: 0; background: rgb(8 10 16 / .55); display: grid; place-items: center; padding: 1rem; z-index: 50; animation: fade .12s ease-out; }
+  .dialog { width: min(34rem, 100%); max-height: 90vh; overflow: auto; background: var(--color-panel); border: 1px solid var(--color-line); border-radius: 16px; padding: 1.5rem; box-shadow: 0 24px 60px rgb(0 0 0 / .35); animation: rise .16s ease-out; }
+  .toast { display: flex; gap: .6rem; align-items: flex-start; background: var(--color-ink); color: var(--color-on-ink); border-radius: 10px; padding: .65rem .9rem; font-size: .88rem; box-shadow: 0 10px 30px rgb(0 0 0 / .25); animation: rise .16s ease-out; }
+  .toast[data-kind="error"] { background: var(--color-danger); color: #fff; }
+  @keyframes fade { from { opacity: 0; } }
+  @keyframes rise { from { opacity: 0; transform: translateY(8px); } }
+
+  .empty { text-align: center; padding: 2.5rem 1rem; }
+  .empty .marks-static { width: 5rem; margin: 0 auto 1rem; color: var(--color-line); }
+
+  .option { display: flex; align-items: flex-start; gap: .7rem; border: 1.5px solid var(--color-line); border-radius: 10px; padding: .7rem .85rem; cursor: pointer; transition: border-color .12s, background-color .12s; }
+  .option:hover { border-color: var(--color-muted); }
+  .option[data-selected="true"] { border-color: var(--color-action); background: color-mix(in srgb, var(--color-action) 9%, var(--color-panel)); }
+}

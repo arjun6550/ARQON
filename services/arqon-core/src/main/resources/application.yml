@@ -1,0 +1,56 @@
+spring:
+  application:
+    name: arqon-core
+  profiles:
+    default: local
+  datasource:
+    hikari:
+      maximum-pool-size: 10     # keep small; scale with PgBouncer/replicas, not bigger pools
+      minimum-idle: 2
+      connection-timeout: 3000
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate        # schema is owned by Flyway only (see FlywayConfig); entities declare their schema
+  flyway:
+    enabled: false              # Flyway is configured per module in FlywayConfig
+  mail:
+    host: ${SMTP_HOST:}
+    port: ${SMTP_PORT:587}
+    username: ${SMTP_USERNAME:}
+    password: ${SMTP_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: ${SMTP_AUTH:true}
+          starttls:
+            enable: ${SMTP_STARTTLS:true}
+            required: ${SMTP_STARTTLS_REQUIRED:true}
+          ssl:
+            enable: ${SMTP_SSL:false}
+          connectiontimeout: 5000
+          timeout: 10000
+          writetimeout: 10000
+
+server:
+  port: 8081
+  shutdown: graceful
+
+management:
+  server:
+    port: 9081
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: never
+  tracing:
+    sampling:
+      probability: ${TRACING_SAMPLING:1.0}
+  otlp:
+    tracing:
+      endpoint: ${OTLP_TRACING_ENDPOINT:http://localhost:4318/v1/traces}

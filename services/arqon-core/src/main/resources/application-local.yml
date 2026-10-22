@@ -1,0 +1,47 @@
+# LOCAL DEVELOPMENT ONLY (matches infra/docker and local postgres on port 5433).
+# The app connects as arqon_app (NOT owner, NOT superuser) so Row-Level Security applies.
+# Flyway migrates as the owner role (arqon).
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5433}/${DB_NAME:arqon}}
+    username: ${DB_APP_USERNAME:${DB_USERNAME:arqon_app}}
+    password: ${DB_APP_PASSWORD:${DB_PASSWORD:change_me_local_app}}
+  mail:                           # Real SMTP via environment or Mailpit/Mock
+    host: ${SMTP_HOST:localhost}
+    port: ${SMTP_PORT:1025}
+    username: ${SMTP_USERNAME:}
+    password: ${SMTP_PASSWORD:}
+    properties:
+      mail.smtp.auth: ${SMTP_AUTH:false}
+      mail.smtp.starttls.enable: ${SMTP_STARTTLS:false}
+      mail.smtp.starttls.required: false
+      mail.smtp.ssl.enable: ${SMTP_SSL:false}
+      mail.smtp.connectiontimeout: 3000
+      mail.smtp.timeout: 5000
+      mail.smtp.writetimeout: 5000
+
+arqon:
+  invitation:
+    baseUrl: ${ARQON_INVITATION_BASE_URL:http://localhost:5173}
+    mailFrom: ${ARQON_INVITATION_MAIL_FROM:${MAIL_FROM:ARQON Assessments <no-reply@arqon.local>}}
+    dev-log-links: true            # LOCAL ONLY: prints invitation links in the log
+  migration:
+    url: ${DB_MIGRATION_URL:${DB_URL:jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5433}/${DB_NAME:arqon}}}
+    user: ${DB_MIGRATION_USERNAME:arqon}
+    password: ${DB_MIGRATION_PASSWORD:change_me_local}
+  auth:
+    cookie-secure: false          # http://localhost
+  jwt:
+    generate-ephemeral: true      # tokens die on restart; prod must supply real keys
+  bootstrap-admin:
+    name: ${ARQON_BOOTSTRAP_ADMIN_NAME:Arjun Shinde}
+    email: ${ARQON_BOOTSTRAP_ADMIN_EMAIL:arjunnshinde9@gmail.com}
+    password: ${ARQON_BOOTSTRAP_ADMIN_PASSWORD:}
+
+management:
+  health:
+    mail:
+      enabled: false
+  tracing:
+    sampling:
+      probability: ${TRACING_SAMPLING:0.0}

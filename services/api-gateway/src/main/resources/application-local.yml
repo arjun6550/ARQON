@@ -1,0 +1,5 @@
+# LOCAL DEVELOPMENT ONLY
+spring:
+  data:
+    redis:
+      password: ${REDIS_PASSWORD:change_me_local}

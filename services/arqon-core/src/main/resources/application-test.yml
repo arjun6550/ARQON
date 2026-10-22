@@ -1,0 +1,16 @@
+management:
+  tracing:
+    enabled: false
+springdoc:
+  api-docs:
+    enabled: false
+arqon:
+  invitation:
+    resolve-per-minute-per-ip: 1000
+  auth:
+    cookie-secure: false
+  jwt:
+    generate-ephemeral: true
+  bootstrap-admin:
+    email: root@test.local
+    password: Test-Passw0rd-123!
