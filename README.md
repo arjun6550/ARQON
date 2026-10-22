@@ -73,10 +73,7 @@ $env:DB_APP_PASSWORD = "change_me_local_app"
 $env:DB_MIGRATION_USERNAME = "arqon"
 $env:DB_MIGRATION_PASSWORD = "change_me_local"
 
-# Initial Super Admin Provisioning (Arjun Shinde)
-$env:ARQON_BOOTSTRAP_ADMIN_NAME = "Arjun Shinde"
-$env:ARQON_BOOTSTRAP_ADMIN_EMAIL = "arjunnshinde9@gmail.com"
-$env:ARQON_BOOTSTRAP_ADMIN_PASSWORD = "YourSecurePassword123!"
+
 ```
 
 ### 3. Start Backend Services
